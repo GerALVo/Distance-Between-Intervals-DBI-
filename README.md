@@ -26,10 +26,11 @@ Alternatively, the function can be loaded manually by following these steps:
 	
 
 **Important!**
+
 Note that DBI's function is set to work with one character at a time.
-To calculate the distance for two or more characters coded as intervals we recommend the use of the lapply() function
+To calculate the distance for two or more characters coded as intervals we recommend the use of the `lapply()` function
 and structuring the input as a dataframe compound a two-column wide dataframe for each character. An example of this 
-is given in the functions help (writing "?dbi").
+is given in the functions help (writing `?dbi`).
 To calculate the distance for two or more different types of characters, we recommend working with the resulting
 distance matrices.
 
