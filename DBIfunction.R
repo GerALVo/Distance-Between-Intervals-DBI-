@@ -18,10 +18,10 @@ dbi <- function (x, diag = FALSE, upper = FALSE, gower = FALSE) {
   #' criteria for quantitative characters is applied
   #'
   #' @details Missing values are allowed returning  \code{\link{NA}} values for
-  #'  the computed distances.  
+  #'  the computed distance.  
   #'  
   #' The \code{gower} parameter incorporates the standardization criteria suggested by
-  #'  Gower for quantitative characters for his coefficient (Gower, 1971 p. 859).
+  #'  Gower for quantitative characters for his coefficient bounding the distances (Gower, 1971, p. 859).
   #'
   #' @return  \code{\link{dbi()}} returns an object of class 
   #' \code{\link[stats]{"dist"}}. For more information on the object attributes
@@ -30,17 +30,43 @@ dbi <- function (x, diag = FALSE, upper = FALSE, gower = FALSE) {
   #'  If \code{gower = TRUE} the distances will be bounded between 0 and 1
   #'
   #' @references Gower, J. C. 1971. A general coefficient of similarity and some
-  #' of its properties. Biometrics 27, 857-871.  
+  #' of its properties. Biometrics, 27, 857-871.  
   #' 
-  #' This work.
+  #' Lo Valvo, G. A., Lehmann, O. E. R., and Balseiro, D. In press. A novel distance
+  #' that reduces information loss in continuous characters with few observations.
+  #' Palaeontologia Electronica.
+  #' 
   #' @examples 
-  #' a <- data.frame(runif(15, 0, 2))
-  #' a[, 2] <- a + runif(15)
-  #' dbi(a)
-  #' dbi(a, diag = TRUE)
-  #' dbi(a, diag = TRUE, upper = TRUE)
-  #' dbi(a, gower = TRUE)
+  #' ###For one character:
+  #' 
+  #' #Creating a random database
+  #' database <- data.frame(min = runif(15, 0, 2), max = NA)
+  #' database$max <- database$min + runif(15)
+  #' 
+  #' #Calculating the distance matrix
+  #' dbi(database) #lower triangle of the distance matrix
+  #' dbi(database, diag = TRUE, upper = TRUE) #complete distance matrix
+  #' dbi(database, gower = TRUE) #distances bounded between 0 and 1
+  #' 
+  #' 
+  #' 
+  #' ###For two or more characters:
+  #' 
+  #' #Creating a random database
+  #' database <- data.frame (ch1 = 1:15, ch2 = 1:15)
+  #' database$ch1<-(data.frame(min = runif(15, 0, 2), max = NA))
+  #' database$ch1$max<- database$ch1$min + runif(15) 
+  #' database$ch2<-(data.frame(min = runif(15, 1.5, 5), max = NA))
+  #' database$ch2$max<- database$ch2$min + runif(15)
+  #' 
+  #' #Calculating the distance matrix
+  #' dbi_out<-lapply(database, dbi) #each distance matrix as an element of the list
+  #' dist_mat<-dbi_out[[1]]+dbi_out[[2]] #summing the distance matrices
+  #' 
   #' @author
+  #' Lo Valvo, Gerardo A.;
+  #' Lehmann, Oscar E. R.;
+  #' Balseiro, Diego
   
   dbi.int <- function (datum, dataset) {
     D = NULL
@@ -92,4 +118,4 @@ dbi <- function (x, diag = FALSE, upper = FALSE, gower = FALSE) {
   } else{
     return(dbi_out)
   }}
-cat("Thank you for using DBI from ---- et al. 202X \nFor more information about 'dbi' please check \nthe function's help using the command '?dbi'")
+cat("Thank you for using DBI from Lo Valvo et al. (in press) \nFor more information about 'dbi' please check \nthe function's help using the command '?dbi'")
